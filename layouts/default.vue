@@ -24,6 +24,18 @@ html {
   box-sizing: border-box;
 }
 
+body, button, input, select, textarea {
+    color: #333;
+}
+
+a {
+    text-decoration: none;
+}
+
+ol,ul {
+  list-style: none;
+}
+
 *,
 *::before,
 *::after {
