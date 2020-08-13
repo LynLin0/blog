@@ -1,21 +1,10 @@
 <template>
   <div class="container">
-    <header class="header" :style="{transform:visible.header?`translateY(0)`:`translateY(-100%)`}">
-      <div class="header__inner">
-        <div class="header__logo">LYNLIN0</div>
-        <div class="header__drawer">
-          <nav class="nav">
-            <ul class="nav__list">
-              <li class="nav__item">
-                <a class="nav__link" href="#" @click.prevent="onHeaderItemClick(0)">我是谁</a>
-                <a class="nav__link" href="#" @click.prevent="onHeaderItemClick(1)">文章</a>
-                <a class="nav__link" href="#">关于</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </div>
-    </header>
+    <Header
+      class="header"
+      :style="{transform:visible.header?`translateY(0)`:`translateY(-100%)`}"
+      :onNavClick="onHeaderItemClick"
+    ></Header>
     <main class="main">
       <section>
         <div class="banner">
@@ -40,7 +29,7 @@
           </div>-->
           <div
             class="banner__logo-wrapper"
-            :style="{opacity:1-banner.overlayOpacity,height:`${banner.height}px`}"
+            :style="{opacity:1- banner.overlayOpacity,height:`${banner.height}px`}"
           >
             <img class="banner__logo" src="~/assets/blog_logo.svg" />
             <img class="banner__arrow" src="~assets/arrow_down.svg" @click="onLogoArrowClick" />
@@ -63,7 +52,7 @@
           <h2 class="block__title">文章</h2>
           <section class="note-list">
             <div class="note" v-for="(item,index) in noteArray" :key="index">
-              <a class="note__text" :href="`https://www.lynlin0.top/detail/${item.id}`">
+              <a class="note__text" :href="`/detail?id=${item.id}`">
                 <h2 class="note__title">{{item.title}}</h2>
                 <div class="note__content">{{item.content}}</div>
                 <div class="note__date">{{item.createDate}}</div>
@@ -97,14 +86,11 @@
         </div>
       </div>
     </main>
-    <footer class="footer">
-      <img class="footer__logo" src="~/assets/blog_logo.svg" />
-      <div class="footer__copyright">Copyright © 2020 by Lynlin0's blog . All rights reserved.</div>
-    </footer>
   </div>
 </template>
 
 <script>
+import Header from "../components/Header";
 import marked from "marked";
 import http from "../infrastructure/http";
 import { formatTime } from "../infrastructure/date-time";
@@ -124,7 +110,7 @@ export default {
         height: 0,
       },
       banner: {
-        overlayOpacity: 1,
+        overlayOpacity: 0,
         curr: 0,
         url: "",
         width: 0,
@@ -136,7 +122,7 @@ export default {
   async asyncData({ params }) {
     const urls = await http.get("/banner?size=6");
     const banner = {
-      overlayOpacity: 1,
+      overlayOpacity: 0,
       curr: 0,
       urls,
       width: 1920,
@@ -252,6 +238,12 @@ export default {
       };
       toGenTimeout();
       document.addEventListener("scroll", this.onScroll);
+
+      const hash = window.location.href.split("#")[1];
+      if (hash) {
+        const map = { intro: 0, article: 1 };
+        this.onHeaderItemClick(map[hash]);
+      }
     }
   },
   beforeDestroy() {
@@ -259,6 +251,9 @@ export default {
       window.onresize = null;
     }
     clearTimeout(this.bannerTimeout);
+  },
+  components: {
+    Header,
   },
 };
 </script>
@@ -305,8 +300,8 @@ export default {
     padding: 3px 0;
     font-weight: 700;
     border-bottom: 1px solid transparent;
-    transition: border-bottom-color .2s ease;
-    &:hover{
+    transition: border-bottom-color 0.2s ease;
+    &:hover {
       border-bottom-color: white;
     }
   }
@@ -492,20 +487,6 @@ export default {
     border-color: black;
     color: white;
     background: black;
-  }
-}
-.footer {
-  position: relative;
-  background: #333;
-  color: #fff;
-  padding: 68px 75px 26px;
-  width: 100%;
-  &__logo {
-    width: 190px;
-  }
-  &__copyright {
-    margin-top: 53px;
-    font-size: 12px;
   }
 }
 </style>

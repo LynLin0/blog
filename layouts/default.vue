@@ -1,20 +1,17 @@
 <template>
   <div>
     <Nuxt />
+    <footer class="footer">
+      <img class="footer__logo" src="~/assets/blog_logo.svg" />
+      <div class="footer__copyright">Copyright © 2020 by Lynlin0's blog . All rights reserved.</div>
+    </footer>
   </div>
 </template>
 
-<style>
+<style lang="scss" >
 html {
-  font-family:
-    'Source Sans Pro',
-    -apple-system,
-    BlinkMacSystemFont,
-    'Segoe UI',
-    Roboto,
-    'Helvetica Neue',
-    Arial,
-    sans-serif;
+  font-family: "Source Sans Pro", -apple-system, BlinkMacSystemFont, "Segoe UI",
+    Roboto, "Helvetica Neue", Arial, sans-serif;
   font-size: 16px;
   word-spacing: 1px;
   -ms-text-size-adjust: 100%;
@@ -24,15 +21,20 @@ html {
   box-sizing: border-box;
 }
 
-body, button, input, select, textarea {
-    color: #333;
+body,
+button,
+input,
+select,
+textarea {
+  color: #333;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
 
-ol,ul {
+ol,
+ul {
   list-style: none;
 }
 
@@ -70,5 +72,23 @@ ol,ul {
 .button--grey:hover {
   color: #fff;
   background-color: #35495e;
+}
+
+.footer {
+  position: relative;
+  background: #333;
+  color: #fff;
+  padding: 68px 75px 26px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  &__logo {
+    width: 190px;
+  }
+  &__copyright {
+    margin-top: 53px;
+    font-size: 12px;
+  }
 }
 </style>
