@@ -158,9 +158,11 @@ export default {
     onHeaderItemClick(index) {
       switch (index) {
         case 0:
+          window.location.hash='intro'
           window.scrollTo({ top: this.banner.height, behavior: "smooth" });
           break;
         case 1:
+          window.location.hash='article'
           window.scrollTo({ top: this.banner.height * 2, behavior: "smooth" });
           break;
       }
