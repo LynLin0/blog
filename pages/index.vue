@@ -1,7 +1,6 @@
 <template>
   <div class="container">
     <Header
-      class="header"
       :style="{transform:visible.header?`translateY(0)`:`translateY(-100%)`}"
       :onNavClick="onHeaderItemClick"
     ></Header>
@@ -52,11 +51,6 @@
           <h2 class="block__title">文章</h2>
           <section class="note-list">
             <div class="note" v-for="(item,index) in noteArray" :key="index">
-              <a class="note__text" :href="`/detail?id=${item.id}`">
-                <h2 class="note__title">{{item.title}}</h2>
-                <div class="note__content">{{item.content}}</div>
-                <div class="note__date">{{item.createDate}}</div>
-              </a>
               <div class="note__slider" ref="slider" :style="{height:`${slider.height}px`}">
                 <!-- :style="{width:`${slider.width}px`,height:`${slider.height}px`}" -->
                 <div class="note__slider__img-wrapper">
@@ -78,6 +72,10 @@
                   ></div>
                 </div>
               </div>
+              <a class="note__text" :href="`/detail?id=${item.id}`">
+                <h2 class="note__title">{{item.title}}</h2>
+                <div class="note__content">{{item.content}}</div>
+              </a>
             </div>
           </section>
           <section class="more-wrapper">
@@ -158,11 +156,11 @@ export default {
     onHeaderItemClick(index) {
       switch (index) {
         case 0:
-          window.location.hash='intro'
+          window.location.hash = "intro";
           window.scrollTo({ top: this.banner.height, behavior: "smooth" });
           break;
         case 1:
-          window.location.hash='article'
+          window.location.hash = "article";
           window.scrollTo({ top: this.banner.height * 2, behavior: "smooth" });
           break;
       }
@@ -218,6 +216,9 @@ export default {
   created() {
     if (process.browser) {
       this.onResize = () => {
+        if (document.documentElement.clientWidth > 980) {
+          this.visible.drawer = false;
+        }
         // const height = document.documentElement.offsetHeight;
         const height = window.innerHeight;
         const width = document.documentElement.clientWidth;
@@ -266,47 +267,7 @@ export default {
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  text-align: center;
   background-color: white;
-}
-.header {
-  width: 100%;
-  height: 70px;
-  background-color: rgba(0, 0, 0, 0.35);
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  transition: transform 0.3s linear;
-  &__inner {
-    padding: 0 40px;
-    display: flex;
-    align-items: center;
-    height: 100%;
-    justify-content: space-between;
-  }
-  &__logo {
-    color: white;
-    font-size: 28px;
-    cursor: pointer;
-    user-select: none;
-  }
-  &__drawer {
-    font-size: 16px;
-  }
-}
-.nav {
-  display: flex;
-  &__link {
-    color: white;
-    margin-left: 40px;
-    padding: 3px 0;
-    font-weight: 700;
-    border-bottom: 1px solid transparent;
-    transition: border-bottom-color 0.2s ease;
-    &:hover {
-      border-bottom-color: white;
-    }
-  }
 }
 
 .banner {
@@ -378,9 +339,9 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 0 50px;
 }
 .block {
-  padding: 0 50px;
   max-width: 1200px;
   &__title {
     font-size: 16px;
@@ -434,6 +395,7 @@ export default {
     width: 50%;
     margin-left: 10%;
     position: relative;
+    order: 1;
     &__img-wrapper {
       position: relative;
       height: calc(100% - 16px);
@@ -472,6 +434,7 @@ export default {
   position: relative;
   background: white;
   height: 380px;
+  text-align: center;
 }
 .more {
   width: 300px;
@@ -489,6 +452,40 @@ export default {
     border-color: black;
     color: white;
     background: black;
+  }
+}
+
+@media (max-width: 980px) {
+  .banner {
+    &__arrow {
+      width: 9.3vw;
+    }
+    &__intro {
+      width: 250px;
+      &__main {
+        font-size: 30px;
+      }
+      &__sub {
+        color: white;
+        text-align: left;
+        font-size: 20px;
+      }
+    }
+  }
+  .note {
+    display: block;
+    &__slider {
+      margin-left: 0;
+      width: 100%;
+    }
+    &__title{
+      margin-top: 30px;
+    }
+  }
+  .more {
+    font-size: 20px;
+    height: 45px;
+    width: 182px;
   }
 }
 </style>
