@@ -13,7 +13,7 @@
             </li>
             <!-- <li class="nav__item">
               <a class="nav__link" href="#">关于</a>
-            </li> -->
+            </li>-->
           </ul>
         </nav>
       </div>
@@ -29,26 +29,18 @@ export default {
       default: null,
     },
   },
-  data() {
-    return {
-      visible: {
-        drawer: true,
-      },
-    };
-  },
   methods: {
     onToggleClick() {
-      this.visible.drawer = !this.visible.drawer;
-      if (this.visible.drawer) {
+      if ([].indexOf.call(document.body.classList, "is-nav-open") === -1) {
         document.body.classList.add("is-nav-open");
       } else {
         document.body.classList.remove("is-nav-open");
       }
     },
     onHeaderItemClick(index) {
-      console.log(document.documentElement.clientWidth)
-      if(document.documentElement.clientWidth<980){
-        this.onToggleClick()
+      console.log(document.documentElement.clientWidth);
+      if (document.documentElement.clientWidth < 980) {
+        this.onToggleClick();
       }
       if (this.onNavClick) {
         this.onNavClick(index);
@@ -97,8 +89,8 @@ export default {
   &__drawer {
     font-size: 16px;
   }
-  &__toggle{
-      display: none;
+  &__toggle {
+    display: none;
   }
 
   .nav {
@@ -133,12 +125,12 @@ export default {
       }
       &__toggle {
         &::before {
-          top:50%;
+          top: 50%;
           transform: rotate(45deg);
         }
-        
+
         &::after {
-          top:50%;
+          top: 50%;
           transform: rotate(-45deg);
         }
       }
