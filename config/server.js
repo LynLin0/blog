@@ -1,2 +1,2 @@
-let server = 'https://www.lynlin0.top/api'
+let server = 'http://localhost:8081/api'
 export default server

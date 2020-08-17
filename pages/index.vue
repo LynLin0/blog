@@ -78,9 +78,9 @@
               </a>
             </div>
           </section>
-          <section class="more-wrapper">
+          <!-- <section class="more-wrapper">
             <button class="more" @click="onMoreClick">获取更多</button>
-          </section>
+          </section> -->
         </div>
       </div>
     </main>
@@ -126,7 +126,7 @@ export default {
       width: 1920,
       height: 1080,
     };
-    const res = await http.get("/notes?page=1&size=6");
+    const res = await http.get("/notes?page=1&size=1000");
     const getTextFromHtml = (html) => {
       return html.replace(/<.*?>/g, "");
     };
@@ -231,7 +231,7 @@ export default {
         });
       };
       this.onResize();
-      window.onresize = this.onResize;
+      window.addEventListener("resize", this.onResize, false);
 
       const toGenTimeout = () => {
         this.bannerTimeout = setTimeout(() => {
@@ -251,7 +251,7 @@ export default {
   },
   beforeDestroy() {
     if (process.browser) {
-      window.onresize = null;
+      window.removeEventListener("resize", this.onResize);
     }
     clearTimeout(this.bannerTimeout);
   },
@@ -478,7 +478,7 @@ export default {
       margin-left: 0;
       width: 100%;
     }
-    &__title{
+    &__title {
       margin-top: 30px;
     }
   }

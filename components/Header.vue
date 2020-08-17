@@ -29,6 +29,28 @@ export default {
       default: null,
     },
   },
+  data() {
+    this.onResize = null;
+    return {
+
+    }
+  },
+  created() {
+    if (process.browser) {
+      this.onResize = () => {
+        if (document.documentElement.clientWidth > 980) {
+          document.body.classList.remove("is-nav-open");
+        }
+      };
+      this.onResize();
+      window.addEventListener("resize", this.onResize, false);
+    }
+  },
+   beforeDestroy() {
+    if (process.browser) {
+      window.removeEventListener("resize", this.onResize);
+    }
+  },
   methods: {
     onToggleClick() {
       if ([].indexOf.call(document.body.classList, "is-nav-open") === -1) {
@@ -71,7 +93,7 @@ export default {
   top: 0;
   left: 0;
   right: 0;
-  transition: transform 0.3s linear;
+  transition: transform 0.3s linear, background 0.3s ease;
   &__inner {
     padding: 0 40px;
     display: flex;
